@@ -32,7 +32,7 @@ public final class Renderer {
 	private final FixedStack<Graphics2D> graphic_stack;
 	private final FixedStack<double[]> matrix_stack;
 	
-	private boolean fill = false; // Mode
+	private volatile boolean fill = false; // Mode
 	
 	public Renderer(Graphics2D g, GFrame gFrame) {
 		this.g = g;
@@ -73,6 +73,11 @@ public final class Renderer {
 	 * @param a zero to one range (0 - 1)
 	 */
 	public void alpha(float a) {
+		if(a < 0f) {
+			a = 0;
+		} else if(a > 1f) {
+			a = 1f;
+		} // Quick fix
 		final Color cur = g.getColor();
 		color(cur.getRed(), cur.getGreen(), cur.getBlue(), (int)(a * 255));
 	}
@@ -81,6 +86,11 @@ public final class Renderer {
 	 * @param int in 0 - 255 range
 	 */
 	public void alpha(int a) {
+		if(a < 0) {
+			a = 0;
+		} else if(a > 255) {
+			a = 255;
+		} // Quick fix
 		final Color cur = g.getColor();
 		color(cur.getRed(), cur.getGreen(), cur.getBlue(), a);
 	}
@@ -157,17 +167,59 @@ public final class Renderer {
 	// Point
 	
 	public void point(int x, int y) {
-		g.drawRect(x, y, 1, 1);
+		fill();
+		circle(x - pointSize/2f, y - pointSize/2f, pointSize);
+		draw();
 	}
 	
 	public void point(float x, float y) {
-		g.drawRect((int)x, (int)y, 1, 1);
+		fill();
+		circle(x - pointSize/2f, y - pointSize/2f, pointSize);
+		draw();
 	}
 	public void point(Point p) {
-		g.drawRect((int)p.x, (int)p.y, 1, 1);
+		fill();
+		circle(p.x - pointSize/2f, p.y - pointSize/2f, pointSize);
+		draw();
 	}
 	public void point(Vector v) {
-		g.drawRect((int)v.x, (int)v.y, 1, 1);
+		fill();
+		circle(v.x - pointSize/2f, v.y - pointSize/2f, pointSize);
+		draw();
+	}
+	
+	public void point(float x, float y, float size) {
+		fill();
+		circle(x - size/2f, y - size/2f, size);
+		draw();
+	}
+	public void point(Point p, float size) {
+		fill();
+		circle(p.x - size/2f, p.y - size/2f, size);
+		draw();
+	}
+	public void point(Vector v, float size) {
+		fill();
+		circle(v.x - size/2f, v.y - size/2f, size);
+		draw();
+	}
+	
+	// Point size
+	
+	volatile float pointSize = 1;
+	
+	public void pointSize(float size) {
+		if(size < 1f) {
+			size = 1f;
+		} // Avoid negative size
+		pointSize = size;
+	}
+	
+	public void pointSize(int size) {
+		if(size < 1) {
+			size = 1;
+		} // Avoid negative size
+		pointSize = (float)size;
 	}
 	
 	// Line

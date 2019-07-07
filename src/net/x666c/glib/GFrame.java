@@ -121,6 +121,11 @@ public final class GFrame {
 		final int h = height();
 		
 		while(shouldLoop) {
+			if(pause) {
+				Thread.yield();
+				continue;
+			}
+			
 			if(synchronize) {
 				updateCall();
 			}
@@ -143,6 +148,11 @@ public final class GFrame {
 	
 	private void update_loop() {
 		while(shouldLoop) {
+			if(pause) {
+				Thread.yield();
+				continue;
+			}
+			
 			updateCall();
 		}
 	}
@@ -175,6 +185,15 @@ public final class GFrame {
 		
 		internal_frame.add(pane);
 		internal_frame.pack();
+	}
+	
+	private volatile boolean pause = false;
+	public void pause(boolean shoud) {
+		pause = shoud;
+	}
+	
+	public boolean isPaused() {
+		return pause;
 	}
 	
 	public JFrame getInternal_frame() {
