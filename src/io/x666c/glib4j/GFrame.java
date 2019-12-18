@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -24,9 +25,7 @@ import java.util.function.IntConsumer;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import io.x666c.glib4j.components.GButton;
 import io.x666c.glib4j.components.GButtonPane;
@@ -97,7 +96,6 @@ public final class GFrame {
 		internal_frame = new JFrame(title);
 		try {
 			BufferedImage img = ImageIO.read(new BufferedInputStream(GFrame.class.getResourceAsStream("/logo.png")));
-			JOptionPane.showMessageDialog(null, new ImageIcon(img));
 			internal_frame.setIconImage(img);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -237,6 +235,10 @@ public final class GFrame {
 		internal_frame.add(slider);
 		internal_frame.pack();
 //		internal_frame.setLayout(null);
+	}
+	
+	public void setIcon(Image img) {
+		internal_frame.setIconImage(img);
 	}
 	
 	public void addButtons(GButton... btns) {
@@ -523,7 +525,7 @@ public final class GFrame {
 		return f;
 	}
 	
-	private static Class getCallerClass() { 
+	private static Class<?> getCallerClass() { 
 		StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
 		for (int i = 1; i < stElements.length; i++) {
 			StackTraceElement ste = stElements[i];

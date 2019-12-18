@@ -5,7 +5,7 @@
 
 	<groupId>io.0x666c.glib4j</groupId>
 	<artifactId>G-Lib4j</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
 
 	<distributionManagement>
 		<repository>
@@ -17,6 +17,13 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
+		
+		<resources>
+			<resource>
+				<directory>res</directory>
+			</resource>
+		</resources>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
