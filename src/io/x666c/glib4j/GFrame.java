@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -21,8 +22,11 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.function.IntConsumer;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import io.x666c.glib4j.components.GButton;
 import io.x666c.glib4j.components.GButtonPane;
@@ -91,6 +95,13 @@ public final class GFrame {
 		this.ups = ups;
 		
 		internal_frame = new JFrame(title);
+		try {
+			BufferedImage img = ImageIO.read(new BufferedInputStream(GFrame.class.getResourceAsStream("/logo.png")));
+			JOptionPane.showMessageDialog(null, new ImageIcon(img));
+			internal_frame.setIconImage(img);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		internal_frame.setResizable(false);
 		internal_frame.setLayout(new BoxLayout(internal_frame.getContentPane(), BoxLayout.Y_AXIS));
 		internal_frame.addKeyListener(keyListener);

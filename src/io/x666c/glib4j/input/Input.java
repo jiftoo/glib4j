@@ -123,6 +123,9 @@ public class Input {
 	public static final class KeyboardInput {
 		
 		private static final boolean[] keys = new boolean[Short.MAX_VALUE];
+		private static final boolean[] keysOnce = new boolean[Short.MAX_VALUE];
+		private static char lastPressedKey = '\0';
+		private static char lastPressedKeyOnce = '\0';
 		
 		private KeyboardInput() {
 			component.addKeyListener(new KeyListener() {
@@ -130,9 +133,15 @@ public class Input {
 				
 				public void keyReleased(KeyEvent e) {
 					keys[e.getExtendedKeyCode()] = false;
+					keysOnce[e.getExtendedKeyCode()] = false;
+					lastPressedKey = '\0';
+					lastPressedKeyOnce = '\0';
 				}
 				public void keyPressed(KeyEvent e) {
 					keys[e.getExtendedKeyCode()] = true;
+					keysOnce[e.getExtendedKeyCode()] = true;
+					lastPressedKey = e.getKeyChar();
+					lastPressedKeyOnce = e.getKeyChar();
 				}
 			});
 		}
@@ -146,6 +155,34 @@ public class Input {
 				return false;
 			return keys[keycode];
 		}
+		
+		
+		public boolean keyOnce(char ch) {
+			final boolean ret = keys[KeyEvent.getExtendedKeyCodeForChar(ch)];
+			keys[KeyEvent.getExtendedKeyCodeForChar(ch)] = false;
+			return ret;
+		}
+		
+		public boolean keyOnce(int keycode) {
+			if(keycode > keys.length)
+				return false;
+			
+			final boolean ret = keys[keycode];
+			keys[keycode] = false;
+			
+			return ret;
+		}
+		
+		public char last() {
+			return lastPressedKey;
+		}
+		
+		public char lastOnce() {
+			final char ret = lastPressedKeyOnce;
+			lastPressedKeyOnce = '\0';
+			return ret;
+		}
+		
 		
 		
 		private void reset() {
