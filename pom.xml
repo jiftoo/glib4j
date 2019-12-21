@@ -5,7 +5,7 @@
 
 	<groupId>io.0x666c.glib4j</groupId>
 	<artifactId>G-Lib4j</artifactId>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 
 	<distributionManagement>
 		<repository>
@@ -29,8 +29,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>10</source>
-					<target>10</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 
