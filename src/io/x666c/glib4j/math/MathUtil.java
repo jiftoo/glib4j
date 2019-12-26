@@ -1,5 +1,6 @@
 package io.x666c.glib4j.math;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -60,5 +61,43 @@ public class MathUtil {
 	@SafeVarargs
 	public static <T> T select(Supplier<T>... constructor) {
 		return constructor[random(constructor.length)].get();
+	}
+	
+	public static int[] randomArray(int origin, int bound, int count) {
+		final int[] set = new int[count];
+		for (int i = 0; i < count; i++) {
+			set[i] = random(origin, bound);
+		}
+		return set;
+	}
+	
+	public static int[] randomSet(int origin, int bound, int count) {
+		final HashSet<Integer> set = new HashSet<Integer>();
+		while(set.size() < count) {
+			set.add(random(origin, bound));
+		}
+		
+		int[] ret = new int[count];
+		Integer[] setInt = new Integer[count];
+		set.toArray(setInt);
+		for (int i = 0; i < count; i++) {
+			ret[i] = setInt[i];
+		}
+		return ret;
+	}
+	
+	public static float[] randomSet(float origin, float bound, int count) {
+		final HashSet<Float> set = new HashSet<Float>();
+		while(set.size() < count) {
+			set.add(random(origin, bound));
+		}
+		
+		float[] ret = new float[count];
+		Float[] setInt = new Float[count];
+		set.toArray(setInt);
+		for (int i = 0; i < count; i++) {
+			ret[i] = setInt[i];
+		}
+		return ret;
 	}
 }
