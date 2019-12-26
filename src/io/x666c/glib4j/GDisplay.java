@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -346,6 +347,8 @@ public final class GDisplay extends Canvas {
 				rFunc = r -> {
 					try {
 						stupidFinalRender.invoke(null, r);
+					} catch (InvocationTargetException ite) {
+						ite.getCause().printStackTrace();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -356,6 +359,8 @@ public final class GDisplay extends Canvas {
 					rFunc = r -> {
 						try {
 							stupidFinalRender.invoke(stupidFinalCallerClass, r);
+						} catch (InvocationTargetException ite) {
+							ite.getCause().printStackTrace();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

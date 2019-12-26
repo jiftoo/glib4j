@@ -122,8 +122,8 @@ public class Input {
 	
 	public static final class KeyboardInput {
 		
-		private static final boolean[] keys = new boolean[Short.MAX_VALUE];
-		private static final boolean[] keysOnce = new boolean[Short.MAX_VALUE];
+		private static final boolean[] keys = new boolean[Short.MAX_VALUE + 1];
+		private static final boolean[] keysOnce = new boolean[Short.MAX_VALUE + 1];
 		private static char lastPressedKey = '\0';
 		private static char lastPressedKeyOnce = '\0';
 		
@@ -132,14 +132,14 @@ public class Input {
 				public void keyTyped(KeyEvent e) {}
 				
 				public void keyReleased(KeyEvent e) {
-					keys[e.getExtendedKeyCode()] = false;
-					keysOnce[e.getExtendedKeyCode()] = false;
+					keys[e.getKeyCode()] = false;
+					keysOnce[e.getKeyCode()] = false;
 					lastPressedKey = '\0';
 					lastPressedKeyOnce = '\0';
 				}
 				public void keyPressed(KeyEvent e) {
-					keys[e.getExtendedKeyCode()] = true;
-					keysOnce[e.getExtendedKeyCode()] = true;
+					keys[e.getKeyCode()] = true;
+					keysOnce[e.getKeyCode()] = true;
 					lastPressedKey = e.getKeyChar();
 					lastPressedKeyOnce = e.getKeyChar();
 				}
