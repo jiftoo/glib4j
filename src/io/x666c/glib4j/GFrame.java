@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -465,6 +466,8 @@ public final class GFrame {
 				rFunc = r -> {
 					try {
 						stupidFinalRender.invoke(null, r);
+					} catch (InvocationTargetException ite) {
+						ite.getCause().printStackTrace();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -475,6 +478,8 @@ public final class GFrame {
 					rFunc = r -> {
 						try {
 							stupidFinalRender.invoke(stupidFinalCallerClass, r);
+						} catch (InvocationTargetException ite) {
+							ite.getCause().printStackTrace();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
