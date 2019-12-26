@@ -1,5 +1,7 @@
 package io.x666c.glib4j.math;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -63,6 +65,14 @@ public class MathUtil {
 		return constructor[random(constructor.length)].get();
 	}
 	
+	public static <T> T select(T[] constructor) {
+		return constructor[random(constructor.length)];
+	}
+	
+	public static int select(int[] constructor) {
+		return constructor[random(constructor.length)];
+	}
+	
 	public static int[] randomArray(int origin, int bound, int count) {
 		final int[] set = new int[count];
 		for (int i = 0; i < count; i++) {
@@ -72,6 +82,10 @@ public class MathUtil {
 	}
 	
 	public static int[] randomSet(int origin, int bound, int count) {
+		if(origin > bound || (bound - origin + 1) < count) {
+			throw new RuntimeException("Invalid arguments");
+		}
+		
 		final HashSet<Integer> set = new HashSet<Integer>();
 		while(set.size() < count) {
 			set.add(random(origin, bound));
@@ -80,13 +94,19 @@ public class MathUtil {
 		int[] ret = new int[count];
 		Integer[] setInt = new Integer[count];
 		set.toArray(setInt);
+		Collections.shuffle(Arrays.asList(setInt));
 		for (int i = 0; i < count; i++) {
 			ret[i] = setInt[i];
 		}
+		
 		return ret;
 	}
 	
 	public static float[] randomSet(float origin, float bound, int count) {
+		if(origin > bound || (bound - origin + 1) < count) {
+			throw new RuntimeException("Invalid arguments");
+		}
+		
 		final HashSet<Float> set = new HashSet<Float>();
 		while(set.size() < count) {
 			set.add(random(origin, bound));
@@ -95,9 +115,11 @@ public class MathUtil {
 		float[] ret = new float[count];
 		Float[] setInt = new Float[count];
 		set.toArray(setInt);
+		Collections.shuffle(Arrays.asList(setInt));
 		for (int i = 0; i < count; i++) {
 			ret[i] = setInt[i];
 		}
+		
 		return ret;
 	}
 }

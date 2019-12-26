@@ -498,6 +498,8 @@ public final class GFrame {
 				uFunc = () -> {
 					try {
 						stupidFinalUpdate.invoke(null);
+					} catch (InvocationTargetException ite) {
+						ite.getCause().printStackTrace();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -508,6 +510,8 @@ public final class GFrame {
 					uFunc = () -> {
 						try {
 							stupidFinalUpdate.invoke(stupidFinalCallerClass);
+						} catch (InvocationTargetException ite) {
+							ite.getCause().printStackTrace();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

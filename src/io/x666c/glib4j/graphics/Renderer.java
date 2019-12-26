@@ -3,6 +3,7 @@ package io.x666c.glib4j.graphics;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -301,6 +302,24 @@ public class Renderer {
 		font(current.deriveFont((float) size));
 		g.drawString(text, x, y);
 		font(current);
+	}
+	
+	public void textLeading(String text, int x, int y) {
+		FontMetrics metric = g.getFontMetrics(g.getFont());
+		text(text, x, y + metric.getAscent() - metric.getDescent() - metric.getLeading());
+	}
+	public void textLeading(String text, float x, float y) {
+		FontMetrics metric = g.getFontMetrics(g.getFont());
+		text(text, x, y + metric.getAscent() - metric.getDescent() - metric.getLeading());
+	}
+	
+	public void textLeading(String text, float x, float y, int size) {
+		FontMetrics metric = g.getFontMetrics(g.getFont());
+		text(text, x, y + metric.getAscent() - metric.getDescent() - metric.getLeading(), size);
+	}
+	public void textLeading(String text, int x, int y, int size) {
+		FontMetrics metric = g.getFontMetrics(g.getFont());
+		text(text, x, y + metric.getAscent() - metric.getDescent() - metric.getLeading(), size);
 	}
 	
 	// Font
