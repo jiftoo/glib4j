@@ -193,14 +193,24 @@ public class Renderer {
 	// Point
 	
 	public void point(int x, int y) {
+		if(pointSize == 0)
+			return;
 		fill();
-		circle(x - pointSize/2f, y - pointSize/2f, pointSize);
+		if(pointSize == 1)
+			g.drawLine(x, y, x, y);
+		else
+			circle(x - pointSize/2f, y - pointSize/2f, pointSize);
 		draw();
 	}
 	
 	public void point(float x, float y) {
+		if(pointSize == 0)
+			return;
 		fill();
-		circle(x - pointSize/2f, y - pointSize/2f, pointSize);
+		if(pointSize == 1)
+			g.drawLine((int)x, (int)y, (int)x, (int)y);
+		else
+			circle(x - pointSize/2f, y - pointSize/2f, pointSize);
 		draw();
 	}
 	public void point(Point p) {

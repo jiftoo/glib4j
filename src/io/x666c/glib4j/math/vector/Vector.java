@@ -93,6 +93,12 @@ public class Vector implements Cloneable {
 		return (float) (Math.atan2(y,x) - Math.atan2(v2.y,v2.x));
 	}
 	
+	// Rotation angle (in radians)
+	
+	public float heading() {
+		return (float)Math.atan2(y, x);
+	}
+	
 	// Inverse
 	
 	public Vector inverse() {

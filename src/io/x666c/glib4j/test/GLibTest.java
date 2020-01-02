@@ -9,10 +9,14 @@ import io.x666c.glib4j.components.GCustomPane;
 import io.x666c.glib4j.components.GTextField;
 import io.x666c.glib4j.graphics.Renderer;
 import io.x666c.glib4j.input.Input;
+import io.x666c.glib4j.math.vector.Vector;
 
 public class GLibTest {
 	
 	public static void main(String[] args) throws Exception {
+		System.out.println(Vector.create(10, 20).heading());
+		System.out.println(Vector.fromAngle((float) Math.toDegrees(1.1071488f)).heading());
+		
 		GFrame gFrame = new GFrame(60, 60, GLibTest::render, GLibTest::update);
 		gFrame.setSize(600, 600);
 //		gFrame.addSlider("test slider", 0, 100, 0, i -> System.out.println("Slider value: " + i));
