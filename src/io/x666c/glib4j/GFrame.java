@@ -135,7 +135,7 @@ public final class GFrame {
 	
 	public final void start() {
 		if(draw_callback == null)
-			throw new IllegalStateException("UpdateCallback and/or RenderCallback is not set!");
+			throw new IllegalStateException("RenderCallback is not set!");
 		
 		this.renderer = new Thread(this::frame_loop);
 		this.updater  = new Thread(this::update_loop);

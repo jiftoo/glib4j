@@ -33,19 +33,24 @@ public class Input {
 	
 	public static final class MouseInput {
 		
-		private static final boolean[] arr = new boolean[6];
+		private static final boolean[] arr	   = new boolean[6];
+		private static final boolean[] arrOnce = new boolean[6];
 		
 		private MouseInput() {
 			component.addMouseListener(new MouseListener() {
 				public void mouseReleased(MouseEvent e) {
 					int btn = e.getButton();
-					if(btn < arr.length)
+					if(btn < arr.length) {
 						arr[btn] = false;
+						arrOnce[btn] = false;
+					}
 				}
 				public void mousePressed(MouseEvent e) {
 					int btn = e.getButton();
-					if(btn < arr.length)
+					if(btn < arr.length) {
 						arr[btn] = true;
+						arrOnce[btn] = true;
+					}
 				}
 				public void mouseExited(MouseEvent e) {
 					
@@ -54,8 +59,8 @@ public class Input {
 					
 				}
 				public void mouseClicked(MouseEvent e) {
-					
 				}
+				
 			});
 		}
 		
@@ -112,6 +117,33 @@ public class Input {
 		}
 		public boolean mouse5() {
 			return arr[5];
+		}
+		
+		public boolean lmbOnce() {
+			boolean b = arrOnce[MouseEvent.BUTTON1];
+			arrOnce[MouseEvent.BUTTON1] = false;
+			return b;
+		}
+		public boolean mmbOnce() {
+			boolean b = arrOnce[MouseEvent.BUTTON2];
+			arrOnce[MouseEvent.BUTTON2] = false;
+			return b;
+		}
+
+		public boolean rmbOnce() {
+			boolean b = arrOnce[MouseEvent.BUTTON3];
+			arrOnce[MouseEvent.BUTTON3] = false;
+			return b;
+		}
+		public boolean mouse4Once() {
+			boolean b = arrOnce[4];
+			arrOnce[4] = false;
+			return b;
+		}
+		public boolean mouse5Once() {
+			boolean b = arrOnce[5];
+			arrOnce[5] = false;
+			return b;
 		}
 		
 		private void reset() {

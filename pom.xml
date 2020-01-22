@@ -5,7 +5,7 @@
 
 	<groupId>io.0x666c.glib4j</groupId>
 	<artifactId>G-Lib4j</artifactId>
-	<version>1.2.4</version>
+	<version>1.2.5</version>
 
 	<distributionManagement>
 		<repository>
@@ -47,7 +47,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>
