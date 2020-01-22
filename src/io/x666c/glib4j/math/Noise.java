@@ -1,5 +1,10 @@
 package io.x666c.glib4j.math;
 
+import io.x666c.glib4j.math.FastNoise.CellularDistanceFunction;
+import io.x666c.glib4j.math.FastNoise.CellularReturnType;
+import io.x666c.glib4j.math.FastNoise.FractalType;
+import io.x666c.glib4j.math.FastNoise.Interp;
+
 public class Noise {
 	
 	private static FastNoise noise;
@@ -81,6 +86,38 @@ public class Noise {
 	}
 	public static float white(int x, int y, int z, int w) {
 		return noise.GetWhiteNoiseInt(x, y, z, w);
+	}
+	
+	public static void setFrequency(float f) {
+		noise.SetFrequency(f);
+	}
+	
+	public static void setOctaves(int o) {
+		noise.SetFractalOctaves(o);
+	}
+	
+	public static void setLacunarity(int o) {
+		noise.SetFractalLacunarity(o);
+	}
+	
+	public static void setFractalType(FractalType t) {
+		noise.SetFractalType(t);
+	}
+	
+	public static void setInterpolationAlgo(Interp i) {
+		noise.SetInterp(i);
+	}
+	
+	public static void setDistanceFunc(CellularDistanceFunction f) {
+		noise.SetCellularDistanceFunction(f);
+	}
+	
+	public static void setInterpolationAlgo(CellularReturnType r) {
+		noise.SetCellularReturnType(r);
+	}
+	
+	public static void setGradientPerturbAmp(float f) {
+		noise.SetGradientPerturbAmp(f);
 	}
 	
 }
