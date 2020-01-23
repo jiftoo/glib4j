@@ -28,12 +28,14 @@
 
 package io.x666c.glib4j.math;
 
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector3f;
+
 import io.x666c.glib4j.math.Interp.CellularDistanceFunction;
 import io.x666c.glib4j.math.Interp.CellularReturnType;
 import io.x666c.glib4j.math.Interp.FractalType;
-import io.x666c.glib4j.math.vector.Vector;
 
-class FastNoise {
+public class FastNoise {
 	public enum NoiseType {Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal}
 	/*public enum Interp {Linear, Hermite, Quintic}
 	public enum FractalType {FBM, Billow, RigidMulti}
@@ -2050,11 +2052,98 @@ class FastNoise {
 		}
 	}
 
-	public void GradientPerturb(Vector v2) {
+	public void GradientPerturb(Vector3f v3) {
+		SingleGradientPerturb(m_seed, m_gradientPerturbAmp, m_frequency, v3);
+	}
+
+	public void GradientPerturbFractal(Vector3f v3) {
+		int seed = m_seed;
+		float amp = m_gradientPerturbAmp * m_fractalBounding;
+		float freq = m_frequency;
+
+		SingleGradientPerturb(seed, amp, m_frequency, v3);
+
+		for (int i = 1; i < m_octaves; i++) {
+			freq *= m_lacunarity;
+			amp *= m_gain;
+			SingleGradientPerturb(++seed, amp, freq, v3);
+		}
+	}
+
+	private void SingleGradientPerturb(int seed, float perturbAmp, float frequency, Vector3f v3) {
+		float xf = v3.x * frequency;
+		float yf = v3.y * frequency;
+		float zf = v3.z * frequency;
+
+		int x0 = FastFloor(xf);
+		int y0 = FastFloor(yf);
+		int z0 = FastFloor(zf);
+		int x1 = x0 + 1;
+		int y1 = y0 + 1;
+		int z1 = z0 + 1;
+
+		float xs, ys, zs;
+		switch (m_interp) {
+			default:
+			case Linear:
+				xs = xf - x0;
+				ys = yf - y0;
+				zs = zf - z0;
+				break;
+			case Hermite:
+				xs = InterpHermiteFunc(xf - x0);
+				ys = InterpHermiteFunc(yf - y0);
+				zs = InterpHermiteFunc(zf - z0);
+				break;
+			case Quintic:
+				xs = InterpQuinticFunc(xf - x0);
+				ys = InterpQuinticFunc(yf - y0);
+				zs = InterpQuinticFunc(zf - z0);
+				break;
+		}
+
+		Float3 vec0 = CELL_3D[Hash3D(seed, x0, y0, z0) & 255];
+		Float3 vec1 = CELL_3D[Hash3D(seed, x1, y0, z0) & 255];
+
+		float lx0x = Lerp(vec0.x, vec1.x, xs);
+		float ly0x = Lerp(vec0.y, vec1.y, xs);
+		float lz0x = Lerp(vec0.z, vec1.z, xs);
+
+		vec0 = CELL_3D[Hash3D(seed, x0, y1, z0) & 255];
+		vec1 = CELL_3D[Hash3D(seed, x1, y1, z0) & 255];
+
+		float lx1x = Lerp(vec0.x, vec1.x, xs);
+		float ly1x = Lerp(vec0.y, vec1.y, xs);
+		float lz1x = Lerp(vec0.z, vec1.z, xs);
+
+		float lx0y = Lerp(lx0x, lx1x, ys);
+		float ly0y = Lerp(ly0x, ly1x, ys);
+		float lz0y = Lerp(lz0x, lz1x, ys);
+
+		vec0 = CELL_3D[Hash3D(seed, x0, y0, z1) & 255];
+		vec1 = CELL_3D[Hash3D(seed, x1, y0, z1) & 255];
+
+		lx0x = Lerp(vec0.x, vec1.x, xs);
+		ly0x = Lerp(vec0.y, vec1.y, xs);
+		lz0x = Lerp(vec0.z, vec1.z, xs);
+
+		vec0 = CELL_3D[Hash3D(seed, x0, y1, z1) & 255];
+		vec1 = CELL_3D[Hash3D(seed, x1, y1, z1) & 255];
+
+		lx1x = Lerp(vec0.x, vec1.x, xs);
+		ly1x = Lerp(vec0.y, vec1.y, xs);
+		lz1x = Lerp(vec0.z, vec1.z, xs);
+
+		v3.x += Lerp(lx0y, Lerp(lx0x, lx1x, ys), zs) * perturbAmp;
+		v3.y += Lerp(ly0y, Lerp(ly0x, ly1x, ys), zs) * perturbAmp;
+		v3.z += Lerp(lz0y, Lerp(lz0x, lz1x, ys), zs) * perturbAmp;
+	}
+
+	public void GradientPerturb(Vector2f v2) {
 		SingleGradientPerturb(m_seed, m_gradientPerturbAmp, m_frequency, v2);
 	}
 
-	public void GradientPerturbFractal(Vector v2) {
+	public void GradientPerturbFractal(Vector2f v2) {
 		int seed = m_seed;
 		float amp = m_gradientPerturbAmp * m_fractalBounding;
 		float freq = m_frequency;
@@ -2068,7 +2157,7 @@ class FastNoise {
 		}
 	}
 
-	private void SingleGradientPerturb(int seed, float perturbAmp, float frequency, Vector v2) {
+	private void SingleGradientPerturb(int seed, float perturbAmp, float frequency, Vector2f v2) {
 		float xf = v2.x * frequency;
 		float yf = v2.y * frequency;
 
@@ -2109,6 +2198,5 @@ class FastNoise {
 		v2.x += Lerp(lx0x, lx1x, ys) * perturbAmp;
 		v2.y += Lerp(ly0x, ly1x, ys) * perturbAmp;
 	}
-	
-	
+
 }

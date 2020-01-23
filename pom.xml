@@ -17,13 +17,13 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		
+
 		<resources>
 			<resource>
 				<directory>res</directory>
 			</resource>
 		</resources>
-		
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -49,4 +49,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.vecmath</groupId>
+			<artifactId>vecmath</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+	</dependencies>
 </project>

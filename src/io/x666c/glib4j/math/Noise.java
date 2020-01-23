@@ -91,6 +91,10 @@ public class Noise {
 		noise.SetFrequency(f);
 	}
 	
+	public static void setFractalGain(float g) {
+		noise.SetFractalGain(g);
+	}
+	
 	public static void setOctaves(int o) {
 		noise.SetFractalOctaves(o);
 	}
@@ -111,7 +115,7 @@ public class Noise {
 		noise.SetCellularDistanceFunction(f);
 	}
 	
-	public static void setInterpolationAlgo(CellularReturnType r) {
+	public static void setCellularReturnType(CellularReturnType r) {
 		noise.SetCellularReturnType(r);
 	}
 	
