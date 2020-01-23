@@ -28,14 +28,17 @@
 
 package io.x666c.glib4j.math;
 
+import io.x666c.glib4j.math.Interp.CellularDistanceFunction;
+import io.x666c.glib4j.math.Interp.CellularReturnType;
+import io.x666c.glib4j.math.Interp.FractalType;
 import io.x666c.glib4j.math.vector.Vector;
 
 class FastNoise {
 	public enum NoiseType {Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal}
-	public enum Interp {Linear, Hermite, Quintic}
+	/*public enum Interp {Linear, Hermite, Quintic}
 	public enum FractalType {FBM, Billow, RigidMulti}
 	public enum CellularDistanceFunction {Euclidean, Manhattan, Natural}
-	public enum CellularReturnType {CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div}
+	public enum CellularReturnType {CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div}*/
 
 	private int m_seed = 1337;
 	private float m_frequency = (float) 0.01;

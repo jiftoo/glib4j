@@ -1,9 +1,8 @@
 package io.x666c.glib4j.math;
 
-import io.x666c.glib4j.math.FastNoise.CellularDistanceFunction;
-import io.x666c.glib4j.math.FastNoise.CellularReturnType;
-import io.x666c.glib4j.math.FastNoise.FractalType;
-import io.x666c.glib4j.math.FastNoise.Interp;
+import io.x666c.glib4j.math.Interp.CellularDistanceFunction;
+import io.x666c.glib4j.math.Interp.CellularReturnType;
+import io.x666c.glib4j.math.Interp.FractalType;
 
 public class Noise {
 	
